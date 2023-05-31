@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const productoModel = require("../models/usuario");
+const usuarioModel = require("../models/usuario");
 
 router.get('/', function (req, res, next) {
-    productoModel
+    usuarioModel
         .obtener()
         .then(usuarios => {
             res.render("usuarios/ver", {
@@ -28,9 +28,9 @@ router.post('/insertar', function (req, res, next) {
         return res.status(500).send("No hay alguna variable");
     }
     // Si todo va bien, seguimos
-    productoModel
+    usuarioModel
         .insertar(nombre, email, genero, contraseña)
-        .then(idProductoInsertado => {
+        .then(idUsuarioInsertado => {
             res.redirect("/usuarios");
         })
         .catch(err => {
@@ -38,7 +38,7 @@ router.post('/insertar', function (req, res, next) {
         });
 });
 router.get('/eliminar/:id', function (req, res, next) {
-    productoModel
+    usuarioModel
         .eliminar(req.params.id)
         .then(() => {
             res.redirect("/usuarios");
@@ -48,7 +48,7 @@ router.get('/eliminar/:id', function (req, res, next) {
         });
 });
 router.get('/editar/:id', function (req, res, next) {
-    productoModel
+    usuarioModel
         .obtenerPorId(req.params.id)
         .then(usuario => {
             if (usuario) {
@@ -72,7 +72,7 @@ router.post('/actualizar/', function (req, res, next) {
         return res.status(500).send("No hay suficientes datos");
     }
     // Si todo va bien, seguimos
-    productoModel
+    usuarioModel
         .actualizar(id_usuario, nombre, email, genero, contraseña)
         .then(() => {
             res.redirect("/usuarios");
